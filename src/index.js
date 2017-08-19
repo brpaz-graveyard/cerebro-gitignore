@@ -13,23 +13,27 @@ const plugin = ({ term, display, actions }) => {
 
   if (match) {
 
-    if (match[1] == undefined || match[1] == "") {
-      displayTemplatesList(templatesList, display, actions);
-    } else {
+    let resultsToDisplay = templatesList;
+
+    if (match[1] !== undefined && match[1] !== "") {
       term = match[1].trim();
-      const filtered = tools.search(templatesList, term, (el) => el);
-      
-      if (filtered.length == 0) {
+      resultsToDisplay = tools.search(templatesList, term, (el) => el);
+
+      if (resultsToDisplay.length == 0) {
         display({
           title: `No templates found for ${term}`,
           icon: icon
         });
-      } else if (filtered.length == 1) {
-        displaySingleTemplate(filtered[0], display, actions);
-      } else {
-        displayTemplatesList(filtered, display, actions);
+        return;
+        
+      } else if (resultsToDisplay.length == 1) {
+
+        displaySingleTemplate(resultsToDisplay[0], display, actions);
+        return;
       }
     }
+
+    displayTemplatesList(resultsToDisplay, display, actions);
   }
 }  
 
@@ -63,7 +67,6 @@ const displayTemplatesList = (list, display, actions) => {
  */
 const displaySingleTemplate = (template, display, actions) => {
 
-  // TODO only fetch if the template exists. Do a search first.
   gi.getSingleTemplate(template).then((template) => {
     display({
       title: template.name,
@@ -80,14 +83,14 @@ const displaySingleTemplate = (template, display, actions) => {
 } 
 
 /**
- * Fetches the latest gitignore templates.
+ * Fetches the latest gitignore templates from GitHub when initializing the plugin.
  */
 const initialize = () => {
   console.log("Fetching .gitignore templates list ...");
 
   gi.getAvailableTemplates().then((templates) => {
     templatesList = templates;
-    console.log("Fetching .gitignore templates list (done)");
+    console.log("Fetching .gitignore templates list - done");
   }).catch((err) => {
     throw err;
   });
@@ -95,6 +98,7 @@ const initialize = () => {
 
 // TODO this function is neeed as a workaround for
 // https://github.com/KELiON/cerebro/pull/379
+// It can be removed after the fix is merged.
 const initializeAsync = () => {
 
 }
