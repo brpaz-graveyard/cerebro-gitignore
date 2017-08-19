@@ -1,13 +1,8 @@
 # Cerebro-gitignore
 
-> Cerebro plugin for fetching .gitignore config from [Github](https://developer.github.com/v3/gitignore/).
+> Cerebro plugin for fetching .gitignore templates from [GitHub](https://developer.github.com/v3/gitignore/).
 
 ![](demo.gif)
-
-## Requirements
-
-* Dnsdock should be installed and running on our system. See the respective project [README](https://github.com/aacebedo/dnsdock) for instructions.
-* For now this plugin expects the dnsdock to respond to ".docker" tld. This will be configurable in the future.
 
 ## Usage
 
