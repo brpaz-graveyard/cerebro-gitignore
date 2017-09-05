@@ -1,7 +1,7 @@
 {
   "name": "cerebro-gitignore",
   "description": "Cerebro plugin for fetching .gitignore templates from GitHub",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Bruno Paz",
     "email": "brunopaz@sapo.pt",
